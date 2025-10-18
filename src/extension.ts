@@ -49,12 +49,21 @@ export function activate(ctx: vscode.ExtensionContext) {
 }
 
 async function collapse(doc: vscode.TextDocument) {
-	const twin = vscode.window.visibleTextEditors.find(
-		(e) => e.document === doc && e !== vscode.window.activeTextEditor,
+	// Find all editors showing this document
+	const editors = vscode.window.visibleTextEditors.filter(
+		(e) => e.document === doc,
 	);
-	if (twin) {
-		await twin.hide();
-	}
+
+	if (editors.length <= 1) return;
+
+	// Find the editor with the highest view column (rightmost)
+	const rightmostEditor = editors.reduce((prev, current) => {
+		const prevColumn = prev.viewColumn || 1;
+		const currentColumn = current.viewColumn || 1;
+		return currentColumn > prevColumn ? current : prev;
+	});
+
+	await rightmostEditor.hide();
 	await vscode.commands.executeCommand("editor.unfoldAll");
 }
 
