@@ -1,9 +1,9 @@
 {
 	"name": "vue-split-view",
+	"publisher": "genZintern",
 	"displayName": "Vue Split View",
 	"description": "Toggle a split view of Vue components with script/template focus.",
-	"version": "0.0.1",
-	"publisher": "your-name",
+	"version": "0.1.0",
 	"engines": {
 		"vscode": "^1.88.0"
 	},
